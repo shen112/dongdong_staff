@@ -1,8 +1,9 @@
 package com.dongdong.car.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,16 +67,16 @@ public class TransactionRecordAdapter extends BaseRecyclerAdapter<TransactionRec
         payTypeStr = transactionRecordList.get(position).getPayType(); // 获取支付类型
         transactionRecordTimes = transactionRecordList.get(position).getPayDateTime();
         String[] time = transactionRecordTimes.split("[T.]");
-        if ("提现".equals(payTypeStr)) {
+        if (TextUtils.equals("提现", payTypeStr)) {
             viewHolder.transactionRecordTypeTv.setText("-");
-            viewHolder.transactionRecordTypeTv.setTextColor(Color.parseColor("#000000"));
+            viewHolder.transactionRecordTypeTv.setTextColor(ContextCompat.getColor(context, R.color.black));
             viewHolder.transactionRecordMoney.setText(String.valueOf(transactionRecordList.get(position).getPayTal()));
-            viewHolder.transactionRecordMoney.setTextColor(Color.parseColor("#000000"));
-        } else if ("收入".equals(payTypeStr)) {
+            viewHolder.transactionRecordMoney.setTextColor(ContextCompat.getColor(context, R.color.black));
+        } else if (TextUtils.equals("收入", payTypeStr)) {
             viewHolder.transactionRecordTypeTv.setText("+");
-            viewHolder.transactionRecordTypeTv.setTextColor(Color.parseColor("#ec6941"));
+            viewHolder.transactionRecordTypeTv.setTextColor(ContextCompat.getColor(context, R.color.orange));
             viewHolder.transactionRecordMoney.setText(String.valueOf(transactionRecordList.get(position).getPayTal()));
-            viewHolder.transactionRecordMoney.setTextColor(Color.parseColor("#ec6941"));
+            viewHolder.transactionRecordMoney.setTextColor(ContextCompat.getColor(context, R.color.orange));
         }
         viewHolder.transactionRecordType.setText(transactionRecordList.get(position).getPayType());
         viewHolder.transactionRecordDate.setText(time[0]);
