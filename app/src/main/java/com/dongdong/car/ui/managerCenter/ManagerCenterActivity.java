@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -110,16 +111,16 @@ public class ManagerCenterActivity extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.manager_order_list: // 订单列表
-                managerOrderList.setTextColor(getResources().getColor(R.color.white));
+                managerOrderList.setTextColor(ContextCompat.getColor(ManagerCenterActivity.this, R.color.white));
                 managerOrderList.setBackgroundResource(R.color.orange);
-                managerPersonnelList.setTextColor(getResources().getColor(R.color.orange));
+                managerPersonnelList.setTextColor(ContextCompat.getColor(ManagerCenterActivity.this, R.color.orange));
                 managerPersonnelList.setBackgroundResource(R.color.background_color);
                 break;
 
             case R.id.manager_personnel_list: // 人员列表
-                managerOrderList.setTextColor(getResources().getColor(R.color.orange));
+                managerOrderList.setTextColor(ContextCompat.getColor(ManagerCenterActivity.this, R.color.orange));
                 managerOrderList.setBackgroundResource(R.color.background_color);
-                managerPersonnelList.setTextColor(getResources().getColor(R.color.white));
+                managerPersonnelList.setTextColor(ContextCompat.getColor(ManagerCenterActivity.this, R.color.white));
                 managerPersonnelList.setBackgroundResource(R.color.orange);
                 break;
         }

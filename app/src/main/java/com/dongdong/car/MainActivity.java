@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
     private View receivedOrderView;
     private PopupWindow ReceivedOrderPW; // 被管理端派单后显示的订单弹窗
     private Button receivedOrderExamineBtn;
-    private View onProgressOrderView;
+    private View onProgressOrderView; // 订单未完成时弹出提醒的弹窗
     private PopupWindow onProgressOrderPW;
     private Button onProgressOrderBtn;
 
@@ -207,20 +207,20 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
                         orderId = getOrderMsgResult.getId();
                         orderState = getOrderMsgResult.getOrderState();
                         if (orderState.equals("1")) {
-                            hideCancelOrder();
+                            NoOrders();
                         } else if (orderState.equals("2")) {
-                            hideCancelOrder();
+                            NoOrders();
                         } else if (orderState.equals("3")) {
-                            showCancelOrder();
+                            hasReceivedOrder();
                         } else if (orderState.equals("4")) {
                             showOnProgressOrder();
                         } else if (orderState.equals("5")) {
-                            hideCancelOrder();
+                            NoOrders();
                         } else if (orderState.equals("6")) {
-                            hideCancelOrder();
+                            NoOrders();
                         }
                     } else { // 服务人员还没有接单
-                        hideCancelOrder();
+                        NoOrders();
                     }
                     break;
 
@@ -237,7 +237,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
                                 @Override
                                 public void doPositive() {
                                     dialog.dismiss();
-                                    hideCancelOrder();
+                                    NoOrders();
                                 }
                             });
                         }
@@ -729,9 +729,10 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
         });
     }
 
-    private void showCancelOrder() {
+    private void hasReceivedOrder() { // TODO 已接单
+        driverAddressRl.setVisibility(View.GONE); // 附近地址显示框
         driverGradLl.setVisibility(View.GONE); // 抢单以及附近订单的布局
-        driverCancelOrder.setVisibility(View.VISIBLE); // 取消订单
+        driverCancelOrder.setVisibility(View.GONE); // 取消订单
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -770,9 +771,9 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
     }
 
     private void showOnProgressOrder() {
+        driverAddressRl.setVisibility(View.GONE); // 附近地址显示框
         driverGradLl.setVisibility(View.GONE); // 抢单以及附近订单的布局
         driverCancelOrder.setVisibility(View.GONE); // 取消订单
-        driverAddressRl.setVisibility(View.GONE);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -810,10 +811,10 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
         });
     }
 
-    private void hideCancelOrder() {
-        driverAddressRl.setVisibility(View.VISIBLE);
+    private void NoOrders() {
+        driverAddressRl.setVisibility(View.VISIBLE); // 地址信息显示布局
         driverGradLl.setVisibility(View.VISIBLE); // 抢单以及附近订单的布局
-        driverCancelOrder.setVisibility(View.GONE); // 取消订单
+        driverCancelOrder.setVisibility(View.GONE); // 取消订单布局
     }
 
     /**
@@ -839,13 +840,13 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
                 case "ORDER_TO_BE": // 下订单后待接单
                     ordersId = intent.getStringExtra("ORDER_ID_TO_BE");
                     orderState = intent.getStringExtra("ORDER_STATE_TO_BE");
-                    hideCancelOrder();
+                    NoOrders();
                     break;
 
                 case "ORDER_ACCEPT": // 已接收订单
                     ordersId = intent.getStringExtra("ORDER_ID_ACCEPT");
                     orderState = intent.getStringExtra("ORDER_STATE_ACCEPT");
-                    showCancelOrder();
+                    hasReceivedOrder();
                     break;
 
                 case "ORDER_PROCESSING": // 订单进行中
@@ -857,7 +858,7 @@ public class MainActivity extends BaseActivity implements AMapLocationListener, 
                 case "ORDER_COMPLETED": // 订单已完成
                     ordersId = intent.getStringExtra("ORDER_ID_COMPLETED");
                     orderState = intent.getStringExtra("ORDER_STATE_COMPLETED");
-                    hideCancelOrder();
+                    NoOrders();
                     break;
             }
         }

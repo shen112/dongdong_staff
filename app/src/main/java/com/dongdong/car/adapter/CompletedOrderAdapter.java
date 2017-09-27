@@ -49,7 +49,7 @@ public class CompletedOrderAdapter extends BaseRecyclerAdapter<CompletedOrderAda
     public orderRecordViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
         adapterView = inflater.inflate(R.layout.order_item_adapter_layout, parent, false);
         final orderRecordViewHolder viewHolder = new orderRecordViewHolder(adapterView, true);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() { // 点击监听
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() { // TODO 点击监听
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
